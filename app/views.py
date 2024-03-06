@@ -22,7 +22,7 @@ def home():
 @app.route('/about/')
 def about():
     """Render the website's about page."""
-    return render_template('about.html', name="Mary Jane")
+    return render_template('about.html', name="Javon Laing")
 
 def get_uploaded_images():
     rootdir = os.getcwd() + '/uploads'
@@ -43,7 +43,12 @@ def files():
     filenames = get_uploaded_images()
     return render_template('files.html', filenames=filenames)
 
-
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    flash('You have been logged out successfully.', 'success')
+    return redirect(url_for('home'))
 
 @app.route('/upload', methods=['POST', 'GET'])
 @login_required
