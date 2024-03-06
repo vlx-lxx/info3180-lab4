@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<h1 class="page-header">View Images</h1>
+
+{% include 'flash_messages.html' %}
+
+<div class="image-grid">
+    {% for filename in filenames %}
+        <img src="{{ url_for('get_image', filename=filename.split('/')[-1]) }}" alt="{{ filename }}">
+    {% endfor %}
+</div>
+
+{% endblock %}

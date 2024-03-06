@@ -18,3 +18,17 @@ body {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
+
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+.image-grid img {
+    max-width: 100%;
+    height: auto;
+    width: 100%; /* Ensure each image takes up the full width of its container */
+    aspect-ratio: 1 / 1; /* Set a fixed aspect ratio for each image */
+    object-fit: cover; /* Ensure each image covers the entire area */
+}
