@@ -6,6 +6,7 @@ from werkzeug.utils import secure_filename
 from app.models import UserProfile
 from app.forms import LoginForm, UploadForm
 from werkzeug.security import check_password_hash
+from flask import send_from_directory
 
 
 ###
@@ -22,6 +23,24 @@ def home():
 def about():
     """Render the website's about page."""
     return render_template('about.html', name="Mary Jane")
+
+@app.route('/files')
+@login_required
+def files():
+    uploaded_images = get_uploaded_images()
+    return render_template('files.html', uploaded_images=uploaded_images)
+
+@app.route('/uploads/<filename>')
+def get_image(filename):
+    return send_from_directory(os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER']), filename)
+
+def get_uploaded_images():
+    upload_folder = os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'])
+    uploaded_images = []
+    for filename in os.listdir(upload_folder):
+        if os.path.isfile(os.path.join(upload_folder, filename)):
+            uploaded_images.append(filename)
+    return uploaded_images
 
 
 @app.route('/upload', methods=['POST', 'GET'])
